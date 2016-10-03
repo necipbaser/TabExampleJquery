@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <style>
+        ul, li {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+            ul#list {
+                padding: 20px;
+            }
+
+                ul#list li {
+                    background: #ddd;
+                    padding: 5px;
+                    border-bottom: 1px solid #808080;
+                }
+
+        #paging {
+            padding: 0 20px 20px 20px;
+        }
+
+            #paging a {
+                color: #fff;
+                background: #3b71ef;
+                padding: 3px 7px;
+                margin-right: 6px;
+                text-decoration: none;
+            }
+
+                #paging a.active {
+                    background-color: #ff0000;
+                }
+    </style>
+
+    @*cdn library for jquery*@
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.0.js"></script>
+
+    @*Our jquery codes*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //total list items count
+            var listCount = $("ul#list li").length;
+
+            //page data count
+            var dataCount = 2;
+
+            //apply paging
+            $("ul#list li:gt(" + (dataCount - 1) + ")").hide();
+
+            //find page count
+            var pageCount = Math.round(listCount / dataCount);
+
+            //add page link
+            for (var i = 1; i <= pageCount; i++) {
+                $("#paging").append('<a href="javascript:void(0)">' + i + '</a>');
+            }
+
+            //Add "active" class for first page
+            $("#paging a:first").addClass("active");
+
+            //click any a element in paging
+            $("#paging a").on('click', function () {
+                var indis = $(this).index() + 1;
+                var gt = dataCount * indis;
+                $("#paging a").removeClass("active");
+                $(this).addClass("active");
+                $("ul#list li").hide();
+
+                for (i = gt - dataCount; i < gt; i++) {
+                    $("ul#list li:eq(" + i + ")").show();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <ul id="list">
+        <li>1. List Item</li>
+        <li>2. List Item</li>
+        <li>3. List Item</li>
+        <li>4. List Item</li>
+        <li>5. List Item</li>
+        <li>6. List Item</li>
+        <li>7. List Item</li>
+        <li>8. List Item</li>
+        <li>9. List Item</li>
+        <li>10. List Item</li>
+        <li>11. List Item</li>
+        <li>12. List Item</li>
+        <li>13. List Item</li>
+    </ul>
+    <div id="paging"></div>
+
+</body>
+</html>
